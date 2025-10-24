@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>برنج داودی - فروشگاه برنج شمال</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'vazir': ['Vazirmatn', 'sans-serif']
+                    },
+                    colors: {
+                        'milky': '#cbced4',
+                        'lime': '#eef5bf',
+                        'blue': '#5572b5',
+                        'green': '#435938',
+                        'warm-gray': '#6b7280',
+                        'text-primary': '#374151',
+                        'text-secondary': '#6b7280'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            background-attachment: fixed;
+        }
+        .paper-texture {
+            background-image:
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(120, 119, 198, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(120, 119, 198, 0.02) 0%, transparent 50%);
+        }
+        .fade-in { animation: fadeIn 0.5s ease-out; }
+        .slide-up { animation: slideUp 0.5s ease-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .product-card { transition: all 0.3s ease-in-out; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
+        .btn-primary {
+            background: linear-gradient(135deg, #5572b5 0%, #435938 100%);
+            transition: all 0.3s ease;
+            color: white;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(85, 114, 181, 0.3); }
+        .btn-primary:disabled { opacity: 0.7; cursor: wait; }
+        .bottom-nav {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.85);
+        }
+        .page { display: none; }
+        .page.active { display: block; }
+    </style>
+</head>
+<body class="font-vazir bg-milky paper-texture min-h-screen">
+
+    <div class="container mx-auto max-w-lg bg-white/60 min-h-screen sm:shadow-2xl sm:my-4 sm:rounded-3xl">
+        
+        <header class="sticky top-0 z-50 p-2 sm:pt-4">
+            <nav class="bg-gradient-to-r from-lime/30 to-green/20 backdrop-blur-md shadow-md rounded-2xl">
+                <div class="px-4 py-3 flex items-center justify-between">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <div class="w-10 h-10 bg-gradient-to-br from-lime to-green rounded-lg flex items-center justify-center shadow-md">
+                            <span class="text-white font-bold text-lg">ب</span>
+                        </div>
+                        <div>
+                            <h1 class="text-lg font-bold text-text-primary">برنج داودی</h1>
+                            <p class="text-xs text-text-secondary">برنج ممتاز شمال</p>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <button onclick="showCart()" class="p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-md hover:shadow-lg transition-all">
+                            <i data-feather="shopping-cart" class="w-5 h-5 text-blue"></i>
+                        </button>
+                        <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center shadow-md">0</span>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main class="pb-28">
+            <!-- Home Page -->
+            <section id="home-page" class="page active">
+                <div class="p-4">
+                    <div class="bg-gradient-to-r from-lime to-green/20 p-6 rounded-2xl shadow-lg mb-6">
+                        <h2 class="text-xl font-bold text-text-primary mb-2">برنج ممتاز شمال کشور</h2>
+                        <p class="text-text-secondary text-sm mb-4">بیش از ۲ دهه تجربه در عرضه بهترین برنج‌های ایرانی</p>
+                        <button onclick="showPage('products-page')" class="btn-primary px-6 py-2 rounded-full text-sm font-semibold">
+                            مشاهده محصولات
+                        </button>
+                    </div>
+
+                    <div>
+                        <h3 class="text-base font-semibold mb-3 text-text-primary px-2">محصولات ویژه</h3>
+                        <div class="space-y-3" id="featured-products">
+                            <!-- JS will populate this -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Products Page -->
+            <section id="products-page" class="page">
+                <div class="p-4">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-bold text-text-primary">انواع برنج</h2>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4" id="products-grid">
+                        <!-- JS will populate this -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Product Detail Page -->
+            <section id="product-detail-page" class="page">
+                <!-- JS will populate this -->
+            </section>
+
+            <!-- Cart Page -->
+            <section id="cart-page" class="page">
+                <div class="p-4">
+                    <h2 class="text-lg font-bold text-text-primary mb-4">سبد خرید</h2>
+                    <div id="cart-items" class="space-y-3 mb-4">
+                        <!-- JS will populate this -->
+                    </div>
+
+                    <div class="bg-gradient-to-r from-lime/30 to-green/20 backdrop-blur-md rounded-lg p-4 shadow-md mb-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-text-secondary text-sm">جمع کل:</span>
+                            <span id="cart-total" class="font-bold text-text-primary">۰ تومان</span>
+                        </div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-text-secondary text-sm">هزینه ارسال:</span>
+                            <span class="text-green text-sm font-semibold">رایگان</span>
+                        </div>
+                        <hr class="my-2 border-green/20">
+                        <div class="flex justify-between items-center">
+                            <span class="font-semibold text-text-primary">مبلغ نهایی:</span>
+                            <span id="final-total" class="font-bold text-lg text-blue">۰ تومان</span>
+                        </div>
+                    </div>
+
+                    <button onclick="proceedToCheckout()" id="checkout-btn" class="w-full btn-primary py-3 rounded-lg font-semibold disabled:opacity-50" disabled>
+                        ادامه خرید
+                    </button>
+                </div>
+            </section>
+
+            <!-- Checkout Page -->
+            <section id="checkout-page" class="page">
+                 <div class="p-4">
+                    <h2 class="text-lg font-bold text-text-primary mb-4">تکمیل سفارش</h2>
+                    <div class="bg-white rounded-xl p-4 shadow-md mb-4">
+                        <h3 class="font-semibold mb-3 text-text-primary">آدرس تحویل</h3>
+                        <textarea id="checkout-address" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue focus:border-transparent" placeholder="آدرس کامل خود را وارد کنید..."></textarea>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 shadow-md mb-4">
+                        <h3 class="font-semibold mb-3 text-text-primary">روش پرداخت</h3>
+                        <div class="space-y-3">
+                            <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                                <input type="radio" name="payment" class="text-blue mt-1" value="cod" checked onchange="togglePaymentMethod()">
+                                <div>
+                                    <span class="font-medium text-text-primary">پرداخت در محل</span>
+                                    <p class="text-xs text-text-secondary mt-1">پرداخت هنگام تحویل کالا</p>
+                                </div>
+                            </label>
+                             <label class="flex items-start space-x-3 space-x-reverse cursor-pointer p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                                <input type="radio" name="payment" class="text-blue mt-1" value="card" onchange="togglePaymentMethod()">
+                                <div>
+                                    <span class="font-medium text-text-primary">کارت به کارت</span>
+                                    <p class="text-xs text-text-secondary mt-1">انتقال وجه و ارسال رسید در واتساپ</p>
+                                </div>
+                            </label>
+                        </div>
+                         <div id="card-details" class="hidden mt-4 p-3 bg-lime/20 rounded-lg border-r-4 border-green">
+                            <h4 class="font-semibold text-sm text-green mb-2">اطلاعات کارت:</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-text-secondary">شماره کارت:</span>
+                                    <span class="font-mono font-semibold text-text-primary">۶۰۳۷-۹۹۱۲-۳۴۵۶-۷۸۹۰</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-text-secondary">نام صاحب کارت:</span>
+                                    <span class="font-semibold text-text-primary">محمدحسین داودی</span>
+                                </div>
+                                <div class="mt-3 p-2 bg-blue/10 rounded text-xs text-center">
+                                    <p class="text-blue">💡 پس از واریز، لطفاً رسید را به شماره واتساپ <strong class="font-mono">09123456789</strong> ارسال کنید.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 shadow-md mb-6">
+                        <h3 class="font-semibold mb-3 text-text-primary">خلاصه سفارش</h3>
+                        <div id="checkout-summary"></div>
+                    </div>
+                    <button id="confirm-order-btn" onclick="confirmOrder()" class="w-full btn-primary py-3 rounded-lg font-semibold">
+                        تایید و ثبت سفارش
+                    </button>
+                </div>
+            </section>
+            
+            <!-- Order Confirmation Page -->
+            <section id="confirmation-page" class="page">
+                <div class="p-4 text-center">
+                    <div class="w-24 h-24 bg-green/20 rounded-full mx-auto mb-6 flex items-center justify-center">
+                        <i data-feather="check-circle" class="w-12 h-12 text-green"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-text-primary mb-4">سفارش شما ثبت شد!</h2>
+                    <p class="text-text-secondary mb-6">سفارش شما با موفقیت ثبت شد و به زودی آماده ارسال خواهد بود.</p>
+                    <div class="bg-white rounded-xl p-4 shadow-md mb-6 text-right">
+                        <div class="flex justify-between mb-2">
+                            <span class="text-text-secondary">شماره سفارش:</span>
+                            <span class="font-bold text-text-primary" id="order-number"></span>
+                        </div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-text-secondary">زمان تحویل:</span>
+                            <span class="font-semibold text-text-primary">۲-۳ روز کاری</span>
+                        </div>
+                    </div>
+                    <button onclick="showOrders()" class="w-full btn-primary py-3 rounded-xl font-semibold mb-3">
+                        مشاهده سفارشات من
+                    </button>
+                    <button onclick="showPage('home-page')" class="w-full bg-gray-200 text-text-primary py-3 rounded-xl font-semibold">
+                        بازگشت به صفحه اصلی
+                    </button>
+                </div>
+            </section>
+
+            <!-- Orders Page -->
+            <section id="orders-page" class="page">
+                <div class="p-4">
+                    <div class="flex items-center mb-6">
+                        <button onclick="showProfile()" class="ml-3 p-2 rounded-full hover:bg-gray-100"><i data-feather="arrow-right" class="w-6 h-6 text-text-primary"></i></button>
+                        <h2 class="text-xl font-bold text-text-primary">سفارشات من</h2>
+                    </div>
+                    <div class="space-y-4" id="orders-list"></div>
+                </div>
+            </section>
+            
+            <!-- Profile Page -->
+            <section id="profile-page" class="page">
+                 <div class="p-4">
+                    <div class="bg-white rounded-xl p-6 shadow-md mb-6 text-center">
+                        <div class="w-20 h-20 bg-gradient-to-br from-lime to-green rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <span id="profile-initial" class="text-white text-3xl font-bold"></span>
+                        </div>
+                        <h3 id="profile-name" class="text-xl font-bold text-text-primary"></h3>
+                        <p id="profile-phone" class="text-text-secondary"></p>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="bg-gradient-to-r from-lime/30 to-green/20 backdrop-blur-md rounded-xl p-4 shadow-md">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="font-semibold text-text-primary">کد معرف شما</span>
+                                <button onclick="shareReferral()" class="text-blue text-sm font-semibold">اشتراک‌گذاری</button>
+                            </div>
+                            <div class="bg-gradient-to-r from-lime to-green/30 rounded-lg p-3 text-center">
+                                <p id="profile-referral-code" class="font-bold text-lg text-green tracking-widest"></p>
+                            </div>
+                        </div>
+                        
+                         <button onclick="showEditProfile()" class="w-full bg-white rounded-xl p-4 shadow-md flex items-center justify-between hover:bg-gray-50 transition-colors">
+                            <div class="flex items-center space-x-3 space-x-reverse">
+                                <i data-feather="edit-3" class="w-5 h-5 text-blue"></i>
+                                <span class="font-semibold text-text-primary">ویرایش اطلاعات</span>
+                            </div>
+                            <i data-feather="chevron-left" class="w-5 h-5 text-text-secondary"></i>
+                        </button>
+                        <button onclick="showReferrals()" class="w-full bg-white rounded-xl p-4 shadow-md flex items-center justify-between hover:bg-gray-50 transition-colors">
+                            <div class="flex items-center space-x-3 space-x-reverse">
+                                <i data-feather="gift" class="w-5 h-5 text-blue"></i>
+                                <span class="font-semibold text-text-primary">پاداش‌های من</span>
+                            </div>
+                            <i data-feather="chevron-left" class="w-5 h-5 text-text-secondary"></i>
+                        </button>
+                        <button onclick="showContact()" class="w-full bg-white rounded-xl p-4 shadow-md flex items-center justify-between hover:bg-gray-50 transition-colors">
+                            <div class="flex items-center space-x-3 space-x-reverse">
+                                <i data-feather="phone" class="w-5 h-5 text-blue"></i>
+                                <span class="font-semibold text-text-primary">تماس با ما</span>
+                            </div>
+                            <i data-feather="chevron-left" class="w-5 h-5 text-text-secondary"></i>
+                        </button>
+                        
+                        <button onclick="logout()" class="w-full bg-red-100 text-red-700 rounded-xl p-4 mt-4 shadow-md flex items-center justify-center font-semibold space-x-2 space-x-reverse">
+                            <i data-feather="log-out" class="w-5 h-5"></i>
+                            <span>خروج از حساب کاربری</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Edit Profile Page -->
+            <section id="edit-profile-page" class="page">
+                <div class="p-4">
+                    <div class="flex items-center mb-6">
+                        <button onclick="showProfile()" class="ml-3 p-2 rounded-full hover:bg-gray-100"><i data-feather="arrow-right" class="w-6 h-6 text-text-primary"></i></button>
+                        <h2 class="text-xl font-bold text-text-primary">ویرایش اطلاعات</h2>
+                    </div>
+                    <form onsubmit="saveProfile(event)" class="space-y-4">
+                        <div class="bg-white rounded-xl p-4 shadow-md">
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-sm font-medium text-text-secondary mb-1">نام و نام خانوادگی</label>
+                                    <input type="text" id="editFullName" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue focus:border-transparent" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-text-secondary mb-1">ایمیل</label>
+                                    <input type="email" id="editEmail" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue focus:border-transparent">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full btn-primary py-3 rounded-xl font-semibold">ذخیره تغییرات</button>
+                    </form>
+                </div>
+            </section>
+            
+            <!-- Referrals Page -->
+            <section id="referrals-page" class="page">
+                 <div class="p-4">
+                    <div class="flex items-center mb-6">
+                        <button onclick="showProfile()" class="ml-3 p-2 rounded-full hover:bg-gray-100"><i data-feather="arrow-right" class="w-6 h-6 text-text-primary"></i></button>
+                        <h2 class="text-xl font-bold text-text-primary">پاداش‌های من</h2>
+                    </div>
+                    <div id="referral-summary" class="grid grid-cols-2 gap-4 mb-6"></div>
+                    <div>
+                        <h3 class="text-base font-semibold mb-3 text-text-primary px-2">تاریخچه پاداش‌ها</h3>
+                        <div class="space-y-3" id="discounts-list"></div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Contact Page -->
+            <section id="contact-page" class="page">
+                <div class="p-4">
+                    <div class="flex items-center mb-6">
+                        <button onclick="showProfile()" class="ml-3 p-2 rounded-full hover:bg-gray-100"><i data-feather="arrow-right" class="w-6 h-6 text-text-primary"></i></button>
+                        <h2 class="text-xl font-bold text-text-primary">تماس و درباره ما</h2>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 shadow-md mb-6">
+                        <h3 class="font-semibold mb-4 text-text-primary">اطلاعات تماس</h3>
+                        <div class="space-y-4">
+                            <a href="tel:09904670738" class="flex items-center space-x-3 space-x-reverse">
+                                <div class="w-10 h-10 bg-blue/20 rounded-lg flex items-center justify-center"><i data-feather="phone" class="w-5 h-5 text-blue"></i></div>
+                                <div>
+                                    <p class="font-semibold text-text-primary">تلفن تماس</p>
+                                    <p class="text-sm text-text-secondary font-mono">۰۹۹۰-۴۶۷-۰۷۳۸</p>
+                                </div>
+                            </a>
+                             <a href="https://wa.me/989123456789" target="_blank" class="flex items-center space-x-3 space-x-reverse">
+                                <div class="w-10 h-10 bg-green/20 rounded-lg flex items-center justify-center"><i data-feather="message-circle" class="w-5 h-5 text-green"></i></div>
+                                <div>
+                                    <p class="font-semibold text-text-primary">واتساپ</p>
+                                    <p class="text-sm text-text-secondary font-mono">۰۹۱۲-۳۴۵-۶۷۸۹</p>
+                                </div>
+                            </a>
+                            <div class="flex items-start space-x-3 space-x-reverse">
+                                <div class="w-10 h-10 bg-lime/80 rounded-lg flex items-center justify-center pt-1"><i data-feather="map-pin" class="w-5 h-5 text-green"></i></div>
+                                <div>
+                                    <p class="font-semibold text-text-primary">آدرس فروشگاه</p>
+                                    <p class="text-sm text-text-secondary leading-relaxed">مازندران، بابل، بلوار کشاورز، خیابان دانشجوی ۲۸، برنج داودی</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="bg-white rounded-xl p-4 shadow-md">
+                        <h3 class="font-semibold mb-4 text-text-primary">درباره برنج داودی</h3>
+                        <p class="text-text-secondary text-sm leading-relaxed">
+                            ما در فروشگاه برنج داودی با بیش از دو دهه سابقه، مفتخریم که عرضه‌کننده ممتازترین برنج‌های شمال کشور هستیم. هدف ما ارائه محصولی با کیفیت، خوش‌طعم و اصیل ایرانی به سفره‌های شماست.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Login/Register Page -->
+            <section id="auth-page" class="page">
+                 <div class="p-4">
+                    <div class="text-center mb-8">
+                        <div class="w-20 h-20 bg-gradient-to-br from-lime to-green rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <span class="text-white text-2xl font-bold">ب</span>
+                        </div>
+                        <h2 class="text-2xl font-bold text-text-primary mb-2">ورود / ثبت نام</h2>
+                        <p class="text-text-secondary">برای ادامه خرید وارد حساب کاربری خود شوید</p>
+                    </div>
+
+                    <div id="login-form">
+                        <div class="bg-gradient-to-r from-lime/30 to-green/20 backdrop-blur-md rounded-xl p-4 shadow-md">
+                            <h3 class="font-semibold mb-4 text-text-primary">ورود به حساب</h3>
+                            <form onsubmit="login(event)" class="space-y-3">
+                                <div>
+                                    <label class="block text-sm font-medium text-text-secondary mb-1">شماره تماس یا ایمیل</label>
+                                    <input type="text" id="loginUsername" placeholder="09123456789" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-text-secondary mb-1">رمز عبور</label>
+                                    <input type="password" id="loginPassword" placeholder="••••••••" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue focus:border-transparent">
+                                </div>
+                                <button type="submit" id="login-btn" class="w-full btn-primary py-3 rounded-lg font-semibold">
+                                    ورود
+                                </button>
+                            </form>
+                        </div>
+                        <div class="text-center mt-4">
+                            <p class="text-text-secondary text-sm">حساب کاربری ندارید؟ <button onclick="showRegisterForm()" class="text-blue font-semibold">ثبت نام کنید</button></p>
+                        </div>
+                    </div>
+
+                    <div id="register-form" class="hidden">
+                        <div class="bg-gradient-to-r from-lime/30 to-green/20 backdrop-blur-md rounded-xl p-4 shadow-md">
+                            <h3 class="font-semibold mb-4 text-text-primary">ثبت نام</h3>
+                            <form onsubmit="register(event)" class="space-y-3">
+                                <div>
+                                    <label class="block text-sm font-medium text-text-secondary mb-1">نام و نام خانوادگی</label>
+                                    <input type="text" id="registerName" placeholder="نام کامل خود را وارد کنید" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue focus:border-transparent" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-text-secondary mb-1">شماره تماس</label>
+                                    <input type="tel" id="registerPhone" placeholder="09123456789" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue focus:border-transparent" required>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-text-secondary mb-1">رمز عبور</label>
+                                    <input type="password" id="registerPassword" placeholder="حداقل ۶ کاراکتر" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue focus:border-transparent" required>
+                                </div>
+                                 <div>
+                                    <label class="block text-sm font-medium text-text-secondary mb-1">کد معرف (اختیاری)</label>
+                                    <input type="text" id="registerReferral" placeholder="کد معرف را وارد کنید" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue focus:border-transparent">
+                                </div>
+                                <button type="submit" id="register-btn" class="w-full btn-primary py-3 rounded-lg font-semibold">
+                                    ثبت نام
+                                </button>
+                            </form>
+                        </div>
+                        <div class="text-center mt-4">
+                             <p class="text-text-secondary text-sm">قبلاً ثبت نام کرده‌اید؟ <button onclick="showLoginForm()" class="text-blue font-semibold">وارد شوید</button></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="fixed bottom-0 left-0 right-0 z-50">
+            <div class="max-w-lg mx-auto p-2">
+                <nav class="bottom-nav rounded-2xl shadow-lg border border-white/20">
+                    <div class="flex justify-around px-2 py-2.5">
+                        <button onclick="showPage('home-page')" class="nav-item flex flex-col items-center py-2 px-3 rounded-xl transition-all" data-page="home">
+                            <i data-feather="home" class="w-6 h-6 mb-1"></i>
+                            <span class="text-xs font-medium">خانه</span>
+                        </button>
+                        <button onclick="showPage('products-page')" class="nav-item flex flex-col items-center py-2 px-3 rounded-xl transition-all" data-page="products">
+                            <i data-feather="package" class="w-6 h-6 mb-1"></i>
+                            <span class="text-xs font-medium">محصولات</span>
+                        </button>
+                        <button onclick="showOrders()" class="nav-item flex flex-col items-center py-2 px-3 rounded-xl transition-all" data-page="orders">
+                            <i data-feather="shopping-bag" class="w-6 h-6 mb-1"></i>
+                            <span class="text-xs font-medium">سفارشات</span>
+                        </button>
+                        <button onclick="showProfile()" class="nav-item flex flex-col items-center py-2 px-3 rounded-xl transition-all" data-page="profile">
+                            <i data-feather="user" class="w-6 h-6 mb-1"></i>
+                            <span class="text-xs font-medium">پروفایل</span>
+                        </button>
+                    </div>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // --- CONFIG ---
+        const API_URL = 'api.php';
+
+        // --- APP STATE ---
+        let cart = [];
+        let allProducts = [];
+        let currentUser = null;
+        let csrfToken = null;
+
+        // --- API HELPER ---
+        async function api(action, data = null, method = 'GET') {
+            const url = new URL(API_URL, window.location.href);
+            url.searchParams.append('action', action);
+            
+            const options = { 
+                method, 
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include'
+            };
+
+            if (method === 'POST' || method === 'PUT') {
+                if (csrfToken) {
+                    options.headers['X-CSRF-Token'] = csrfToken;
+                }
+                options.body = JSON.stringify(data);
+            }
+
+            try {
+                const response = await fetch(url.toString(), options);
+                const result = await response.json();
+                if (!response.ok || !result.success) {
+                    if(response.status === 401) { // Session expired
+                        logout();
+                    }
+                    throw new Error(result.message || `HTTP error! status: ${response.status}`);
+                }
+                return result.data;
+            } catch (error) {
+                console.error(`API Error (${action}):`, error);
+                alert(`خطا: ${error.message}`);
+                throw error;
+            }
+        }
+
+        // --- NAVIGATION & PAGE RENDERING ---
+        function showPage(pageId, requiresAuth = false) {
+            if (requiresAuth && !currentUser) {
+                return showPage('auth-page');
+            }
+
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active', 'fade-in'));
+            const pageElement = document.getElementById(pageId);
+            if (pageElement) {
+                pageElement.classList.add('active');
+                setTimeout(() => pageElement.classList.add('fade-in'), 10);
+            }
+
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('text-blue', 'bg-blue/10');
+                item.classList.add('text-text-secondary');
+            });
+
+            const activeNav = document.querySelector(`[data-page="${pageId.replace('-page', '')}"]`);
+            if (activeNav) {
+                activeNav.classList.add('text-blue', 'bg-blue/10');
+            }
+            window.scrollTo(0, 0);
+            feather.replace({ width: '100%', height: '100%' });
+        }
+        
+        // --- AUTHENTICATION ---
+        async function fetchCsrfToken() {
+            try {
+                const data = await api('getCsrfToken');
+                csrfToken = data.token;
+            } catch (e) {
+                console.error("Could not fetch CSRF token. Actions might fail.");
+            }
+        }
+
+        async function login(event) {
+            event.preventDefault();
+            const loginBtn = document.getElementById('login-btn');
+            const originalText = loginBtn.textContent;
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'در حال ورود...';
+
+            try {
+                const username = document.getElementById('loginUsername').value;
+                const password = document.getElementById('loginPassword').value;
+                currentUser = await api('login', { username, password }, 'POST');
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                await fetchCsrfToken();
+                showProfile();
+            } catch (error) { 
+                /* Handled by api() */ 
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.textContent = originalText;
+            }
+        }
+        
+        async function register(event) {
+            event.preventDefault();
+            const registerBtn = document.getElementById('register-btn');
+            const originalText = registerBtn.textContent;
+            registerBtn.disabled = true;
+            registerBtn.textContent = 'در حال ثبت نام...';
+            
+            try {
+                const name = document.getElementById('registerName').value;
+                const phone = document.getElementById('registerPhone').value;
+                const password = document.getElementById('registerPassword').value;
+                const referral = document.getElementById('registerReferral').value;
+                await api('register', { name, phone, password, referral }, 'POST');
+                alert('ثبت نام موفق! اکنون میتوانید وارد شوید.');
+                showLoginForm();
+            } catch (error) {
+                /* Handled by api() */
+            } finally {
+                registerBtn.disabled = false;
+                registerBtn.textContent = originalText;
+            }
+        }
+
+        async function logout() {
+            try { await api('logout', {}, 'POST'); } 
+            catch (e) { console.error("Logout failed but clearing client side anyway", e); } 
+            finally {
+                currentUser = null;
+                csrfToken = null;
+                localStorage.removeItem('currentUser');
+                showPage('home-page');
+            }
+        }
+        function showLoginForm() {
+            document.getElementById('login-form').classList.remove('hidden');
+            document.getElementById('register-form').classList.add('hidden');
+        }
+        function showRegisterForm() {
+            document.getElementById('register-form').classList.remove('hidden');
+            document.getElementById('login-form').classList.add('hidden');
+        }
+        
+        // --- PROFILE & RELATED PAGES ---
+        async function showProfile() {
+            showPage('profile-page', true);
+            try {
+                const profile = await api('profile');
+                currentUser = { ...currentUser, ...profile };
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+                document.getElementById('profile-name').textContent = profile.name;
+                document.getElementById('profile-phone').textContent = profile.phone || profile.email;
+                document.getElementById('profile-initial').textContent = profile.name ? profile.name.charAt(0) : '?';
+                document.getElementById('profile-referral-code').textContent = profile.referral_code;
+            } catch (error) {
+                // api() handles alert
+            }
+        }
+
+        async function showEditProfile() {
+            showPage('edit-profile-page', true);
+            try {
+                const profile = await api('profile');
+                document.getElementById('editFullName').value = profile.name || '';
+                document.getElementById('editEmail').value = profile.email || '';
+            } catch(e) {/*...*/}
+        }
+
+        async function saveProfile(event) {
+            event.preventDefault();
+            const saveBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = saveBtn.textContent;
+            saveBtn.disabled = true;
+            saveBtn.textContent = 'در حال ذخیره...';
+
+            try {
+                const name = document.getElementById('editFullName').value;
+                const email = document.getElementById('editEmail').value;
+                await api('updateProfile', { name, email }, 'POST');
+                alert('اطلاعات شما با موفقیت به روز شد.');
+                showProfile();
+            } catch (error) {
+                // api() handles alert
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = originalText;
+            }
+        }
+        
+        async function showReferrals() {
+            showPage('referrals-page', true);
+            const summaryContainer = document.getElementById('referral-summary');
+            const listContainer = document.getElementById('discounts-list');
+            summaryContainer.innerHTML = '<p class="text-center col-span-2">در حال بارگذاری...</p>';
+            listContainer.innerHTML = '';
+
+            try {
+                const [profile, discounts] = await Promise.all([api('profile'), api('discounts')]);
+                
+                const totalBonus = discounts.reduce((sum, d) => sum + Number(d.amount), 0);
+                
+                summaryContainer.innerHTML = `
+                    <div class="bg-white p-4 rounded-xl shadow-md text-center">
+                        <p class="text-sm text-text-secondary">افراد دعوت شده</p>
+                        <p class="text-2xl font-bold text-blue">${profile.referral_count || 0}</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow-md text-center">
+                        <p class="text-sm text-text-secondary">مجموع پاداش</p>
+                        <p class="text-2xl font-bold text-green">${formatPrice(totalBonus)} <span class="text-sm">تومان</span></p>
+                    </div>
+                `;
+
+                if (discounts.length > 0) {
+                    listContainer.innerHTML = discounts.map(d => `
+                        <div class="bg-white p-3 rounded-lg shadow-sm flex justify-between items-center">
+                            <div>
+                                <p class="font-semibold text-sm text-text-primary">${d.reason}</p>
+                                <p class="text-xs text-text-secondary">${new Date(d.created_at).toLocaleDateString('fa-IR')}</p>
+                            </div>
+                            <p class="font-bold text-green">+${formatPrice(d.amount)} تومان</p>
+                        </div>
+                    `).join('');
+                } else {
+                    listContainer.innerHTML = '<p class="text-center text-text-secondary p-4">هنوز پاداشی دریافت نکرده‌اید.</p>';
+                }
+            } catch (error) {
+                 summaryContainer.innerHTML = '<p class="text-center text-red-500 col-span-2">خطا در دریافت اطلاعات</p>';
+            }
+        }
+
+        // --- ORDERS ---
+        async function showOrders() {
+            showPage('orders-page', true);
+            const container = document.getElementById('orders-list');
+            container.innerHTML = '<p class="text-center p-4">در حال بارگذاری سفارشات...</p>';
+            try {
+                const orders = await api('orders');
+                if (!orders || orders.length === 0) {
+                    container.innerHTML = '<p class="text-center p-4">شما هنوز سفارشی ثبت نکرده‌اید.</p>';
+                    return;
+                }
+                container.innerHTML = orders.map(order => `
+                    <div class="bg-white rounded-xl p-4 shadow-md">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <p class="font-semibold text-text-primary">سفارش #${order.id}</p>
+                                <p class="text-sm text-text-secondary">${new Date(order.created_at).toLocaleDateString('fa-IR')}</p>
+                            </div>
+                            <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-semibold">${order.status}</span>
+                        </div>
+                        <div class="text-sm text-text-secondary mb-2 border-t pt-2 mt-2">${order.items.map(item => `<p>${item.product_name} × ${item.quantity}</p>`).join('')}</div>
+                        <p class="font-bold text-blue text-left">${formatPrice(order.total_amount)} تومان</p>
+                    </div>`
+                ).join('');
+            } catch (error) {
+                container.innerHTML = '<p class="text-center text-red-500 p-4">خطا در دریافت سفارشات</p>';
+            }
+        }
+        
+        async function confirmOrder() {
+            const confirmBtn = document.getElementById('confirm-order-btn');
+            const originalText = confirmBtn.textContent;
+            confirmBtn.disabled = true;
+            confirmBtn.textContent = 'در حال ثبت...';
+            
+            try {
+                const address = document.getElementById('checkout-address').value;
+                if(!address.trim()) {
+                    alert('لطفا آدرس تحویل را وارد کنید.');
+                    return;
+                }
+
+                const orderData = {
+                    items: cart.map(item => ({ id: item.id, quantity: item.quantity })),
+                    address,
+                    payment: document.querySelector('input[name="payment"]:checked').value
+                };
+            
+                const result = await api('order', orderData, 'POST');
+                cart = [];
+                saveCart();
+                updateCartCount();
+                document.getElementById('order-number').textContent = result.order_id;
+                showPage('confirmation-page');
+                fetchAndDisplayProducts(); 
+            } catch(error) { 
+                /* Handled by api() */ 
+            } finally {
+                confirmBtn.disabled = false;
+                confirmBtn.textContent = originalText;
+            }
+        }
+        
+        // --- PRODUCTS ---
+        async function fetchAndDisplayProducts() {
+            try {
+                allProducts = await api('products');
+                populateFeaturedProducts();
+                populateProducts();
+            } catch (error) {
+                document.getElementById('products-grid').innerHTML = '<p class="text-center text-red-500 col-span-2 p-4">خطا در بارگذاری محصولات</p>';
+            }
+        }
+        
+        function populateFeaturedProducts() {
+             const container = document.getElementById('featured-products');
+             if(!container) return;
+             container.innerHTML = allProducts.slice(0, 3).map(product => `
+                 <div class="bg-gradient-to-r from-lime/30 to-green/20 backdrop-blur-md rounded-xl p-3 shadow-md product-card" onclick="showProductDetail(${product.id})">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <img src="${product.image || 'https://placehold.co/100x100/eef5bf/435938?text=برنج'}" alt="${product.name}" class="w-16 h-16 rounded-lg object-cover">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-semibold text-text-primary truncate">${product.name}</h4>
+                            <p class="text-blue font-bold text-sm mt-1">${formatPrice(product.price)} تومان</p>
+                        </div>
+                        <button onclick="event.stopPropagation(); addToCart(${product.id})" class="btn-primary text-white px-4 py-2 rounded-lg text-sm font-semibold">
+                            افزودن
+                        </button>
+                    </div>
+                </div>
+             `).join('');
+             feather.replace();
+        }
+
+        function populateProducts() {
+            const grid = document.getElementById('products-grid');
+            if (!grid) return;
+            grid.innerHTML = allProducts.map(product => `
+                <div class="bg-gradient-to-r from-lime/30 to-green/20 backdrop-blur-md rounded-xl shadow-md overflow-hidden product-card" onclick="showProductDetail(${product.id})">
+                    <img src="${product.image || 'https://placehold.co/300x200/eef5bf/435938?text=برنج'}" alt="${product.name}" class="w-full h-32 object-cover">
+                    <div class="p-3">
+                        <h3 class="font-semibold text-sm text-text-primary mb-2 truncate">${product.name}</h3>
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue font-bold text-sm">${formatPrice(product.price)} ت</span>
+                            <button onclick="event.stopPropagation(); addToCart(${product.id})" class="bg-blue text-white w-8 h-8 rounded-full flex items-center justify-center transition-transform hover:scale-110">
+                               <i data-feather="plus" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            feather.replace();
+        }
+
+        async function showProductDetail(productId) {
+            const pageContainer = document.getElementById('product-detail-page');
+            pageContainer.innerHTML = `<p class="p-6 text-center">در حال بارگذاری...</p>`;
+            showPage('product-detail-page');
+
+            try {
+                const product = await api('product', { id: productId });
+                pageContainer.innerHTML = `
+                    <div class="relative">
+                        <button onclick="showPage('products-page')" class="absolute top-4 right-4 z-10 bg-white/80 backdrop-blur-sm rounded-full p-2 shadow">
+                             <i data-feather="arrow-right" class="w-6 h-6 text-text-primary"></i>
+                        </button>
+                        <img src="${product.image || 'https://placehold.co/400x300/eef5bf/435938?text=برنج'}" alt="${product.name}" class="w-full h-64 object-cover sm:rounded-t-3xl">
+                    </div>
+                    <div class="bg-white rounded-t-3xl -mt-6 relative z-10 p-6">
+                        <h2 class="text-2xl font-bold text-text-primary mb-2">${product.name}</h2>
+                        <p class="text-text-secondary mb-6 leading-relaxed">${product.description}</p>
+                        <button onclick="addToCart(${product.id})" class="w-full btn-primary py-4 rounded-xl font-semibold text-lg">
+                            افزودن به سبد - ${formatPrice(product.price)} تومان
+                        </button>
+                    </div>
+                `;
+                 feather.replace();
+            } catch(error) {
+                 pageContainer.innerHTML = `<p class="p-6 text-center text-red-500">خطا در دریافت اطلاعات محصول.</p>`;
+            }
+        }
+        
+        // --- CART & CHECKOUT ---
+        function showCart() { showPage('cart-page'); populateCart(); }
+        function showContact() { showPage('contact-page'); }
+
+        function addToCart(productId) {
+            const product = allProducts.find(p => p.id === productId);
+            if (!product) return;
+            if (product.stock <= 0) return alert('متاسفانه موجودی این محصول تمام شده است.');
+
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                if(existingItem.quantity < product.stock) existingItem.quantity++;
+                else return alert('شما به حداکثر موجودی این محصول رسیده‌اید.');
+            } else {
+                cart.push({ id: product.id, name: product.name, price: product.price, image: product.image, quantity: 1 });
+            }
+            saveCart();
+            updateCartCount();
+            showCartNotification();
+        }
+
+        function populateCart() {
+            const container = document.getElementById('cart-items');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8">
+                        <div class="w-16 h-16 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center">
+                           <i data-feather="shopping-cart" class="w-8 h-8 text-text-secondary"></i>
+                        </div>
+                        <p class="text-text-secondary">سبد خرید شما خالی است</p>
+                        <button onclick="showPage('products-page')" class="mt-4 text-blue font-semibold">مشاهده محصولات</button>
+                    </div>`;
+                checkoutBtn.disabled = true;
+            } else {
+                container.innerHTML = cart.map(item => `
+                    <div class="bg-gradient-to-r from-lime/30 to-green/20 backdrop-blur-md rounded-lg p-3 shadow-md flex items-center space-x-3 space-x-reverse">
+                        <img src="${item.image || 'https://placehold.co/100x100/eef5bf/435938?text=برنج'}" alt="${item.name}" class="w-16 h-16 rounded-lg object-cover">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-semibold text-text-primary text-sm truncate">${item.name}</h4>
+                            <p class="text-blue font-bold text-sm mt-1">${formatPrice(item.price)} تومان</p>
+                        </div>
+                        <div class="flex items-center space-x-2 space-x-reverse">
+                            <button onclick="updateQuantity(${item.id}, -1)" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-sm transition-transform hover:scale-110">-</button>
+                            <span class="w-8 text-center font-bold text-text-primary text-lg">${item.quantity}</span>
+                            <button onclick="updateQuantity(${item.id}, 1)" class="w-8 h-8 bg-blue text-white rounded-full flex items-center justify-center text-sm transition-transform hover:scale-110">+</button>
+                        </div>
+                    </div>`).join('');
+                checkoutBtn.disabled = false;
+            }
+            updateCartTotals();
+            feather.replace();
+        }
+        
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            const product = allProducts.find(p => p.id === productId);
+            if (item) {
+                const newQuantity = item.quantity + change;
+                if (newQuantity <= 0) {
+                     cart = cart.filter(i => i.id !== productId);
+                }
+                else if (newQuantity > product.stock) alert('شما به حداکثر موجودی این محصول رسیده‌اید.');
+                else item.quantity = newQuantity;
+            }
+            saveCart();
+            populateCart();
+            updateCartCount();
+        }
+        
+        function updateCartCount() {
+            document.getElementById('cart-count').textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+        }
+        
+        function updateCartTotals() {
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('cart-total').textContent = formatPrice(total) + ' تومان';
+            document.getElementById('final-total').textContent = formatPrice(total) + ' تومان';
+        }
+        
+        function togglePaymentMethod() {
+            const cardDetails = document.getElementById('card-details');
+            const cardRadio = document.querySelector('input[name="payment"][value="card"]');
+            cardDetails.classList.toggle('hidden', !cardRadio.checked);
+        }
+
+        function proceedToCheckout() {
+            if (currentUser) {
+                populateCheckout();
+                showPage('checkout-page');
+            } else {
+                showPage('auth-page');
+            }
+        }
+        
+        function populateCheckout() {
+            const container = document.getElementById('checkout-summary');
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            container.innerHTML = `
+                ${cart.map(item => `
+                    <div class="flex justify-between items-center mb-2 text-sm">
+                        <span class="text-text-secondary">${item.name} × ${item.quantity}</span>
+                        <span class="font-medium text-text-primary">${formatPrice(item.price * item.quantity)} تومان</span>
+                    </div>`).join('')}
+                <hr class="my-3">
+                <div class="flex justify-between items-center">
+                    <span class="font-semibold text-text-primary">مجموع:</span>
+                    <span class="font-bold text-blue">${formatPrice(total)} تومان</span>
+                </div>`;
+        }
+        
+        // --- UTILITY ---
+        function formatPrice(price) { return (typeof price !== 'number') ? '0' : price.toLocaleString('fa-IR'); }
+        function saveCart() { localStorage.setItem('cart', JSON.stringify(cart)); }
+        function showCartNotification() {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-24 right-4 bg-green text-white px-4 py-2 rounded-lg shadow-lg z-50 slide-up';
+            notification.innerHTML = `<div class="flex items-center space-x-2 space-x-reverse"><i data-feather="check-circle" class="w-5 h-5"></i><span>محصول به سبد خرید اضافه شد</span></div>`;
+            document.body.appendChild(notification);
+            feather.replace();
+            setTimeout(() => { notification.remove(); }, 2500);
+        }
+        function shareReferral() {
+            const code = currentUser?.referral_code;
+            if(!code) return;
+            const text = `با کد معرف ${code} از فروشگاه برنج داودی خرید کنید!`;
+            if (navigator.share) {
+                navigator.share({ title: 'معرفی فروشگاه برنج داودی', text, url: window.location.href });
+            } else {
+                navigator.clipboard.writeText(text).then(() => alert('کد معرف کپی شد!'));
+            }
+        }
+
+        // --- APP INITIALIZATION ---
+        async function initializeApp() {
+            currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            updateCartCount();
+
+            if (currentUser) {
+                await fetchCsrfToken();
+            }
+            
+            await fetchAndDisplayProducts();
+            showPage('home-page');
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+</body>
+</html>
+
